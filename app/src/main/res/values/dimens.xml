@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="post_width_picture_size">120dp</dimen>
+    <dimen name="post_height_picture_size">68dp</dimen>
+    <dimen name="event_width_picture_size">180dp</dimen>
+    <dimen name="event_height_picture_size">100dp</dimen>
+    <dimen name="text_size">16sp</dimen>
+    <dimen name="link_size">14sp</dimen>
+    <dimen name="category_text_size">14sp</dimen>
+    <dimen name="tag_text_size">14sp</dimen>
+    <dimen name="horizontal_default_margin">10dp</dimen>
+    <dimen name="margin_edit_text">4dp</dimen>
+    <dimen name="vertical_default_margin">10dp</dimen>
+    <dimen name="default_margin">8dp</dimen>
+</resources>

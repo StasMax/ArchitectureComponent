@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <import type="android.view.View"/>
+        <import type="android.text.TextUtils"/>
+        <import type="java.util.List"/>
+        <variable
+            name="publishModel"
+            type="com.example.android.architecturecomponent.data.model.PublishModel" />
+
+    </data>
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/card_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        card_view:cardCornerRadius="8dp"
+        card_view:cardElevation="4dp">
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/linearLayout3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp">
+
+            <TextView
+                android:id="@+id/load_txt_event"
+                android:visibility="@{(publishModel.imageFile.size == 0) ? View.GONE : View.VISIBLE}"
+                android:text="@string/load_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                card_view:layout_constraintBottom_toTopOf="@+id/view_flipper_event"
+                card_view:layout_constraintEnd_toEndOf="@+id/category_event"
+                card_view:layout_constraintStart_toStartOf="@+id/textView"
+                card_view:layout_constraintTop_toTopOf="parent" />
+
+            <ViewFlipper
+                android:id="@+id/view_flipper_event"
+                android:visibility="@{(publishModel.imageFile.size == 0) ? View.GONE : View.VISIBLE}"
+                android:layout_width="@dimen/event_width_picture_size"
+                android:layout_height="@dimen/event_height_picture_size"
+                android:autoStart="true"
+                android:flipInterval="3000"
+                card_view:layout_constraintBottom_toTopOf="@+id/category_event"
+                card_view:layout_constraintEnd_toStartOf="@+id/load_txt_event"
+                card_view:layout_constraintStart_toStartOf="@+id/load_txt_event"
+                card_view:layout_constraintTop_toBottomOf="@+id/load_txt_event" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:visibility="@{(publishModel.category.size == 0) ? View.GONE : View.VISIBLE}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="10dp"
+                android:text="@string/category"
+                android:textSize="@dimen/category_text_size"
+                card_view:layout_constraintBottom_toTopOf="@+id/tag_event"
+                card_view:layout_constraintEnd_toStartOf="@+id/category_event"
+                card_view:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/category_event"
+                android:text="@{(publishModel.category.size == 0) ? View.GONE : View.VISIBLE}"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/category_text_size"
+                android:textStyle="bold"
+                card_view:layout_constraintBottom_toTopOf="@+id/tag_event"
+                card_view:layout_constraintEnd_toEndOf="parent"
+                card_view:layout_constraintStart_toEndOf="@+id/textView"
+                card_view:layout_constraintTop_toBottomOf="@+id/view_flipper_event" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:visibility="@{(publishModel.tag.size == 0) ? View.GONE : View.VISIBLE}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="9dp"
+                android:text="@string/tag"
+                android:textSize="@dimen/tag_text_size"
+                card_view:layout_constraintEnd_toStartOf="@+id/tag_event"
+                card_view:layout_constraintStart_toStartOf="parent"
+                card_view:layout_constraintTop_toBottomOf="@+id/textView" />
+
+            <TextView
+                android:id="@+id/tag_event"
+                android:text="@{(publishModel.tag.size == 0) ? View.GONE : View.VISIBLE}"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:textSize="@dimen/tag_text_size"
+                android:textStyle="italic"
+                card_view:layout_constraintBottom_toTopOf="@+id/header_event"
+                card_view:layout_constraintEnd_toEndOf="parent"
+                card_view:layout_constraintStart_toEndOf="@+id/textView2"
+                card_view:layout_constraintTop_toBottomOf="@+id/category_event" />
+
+            <TextView
+                android:id="@+id/header_event"
+                android:text="@{TextUtils.isEmpty(publishModel.header) ? View.GONE : View.VISIBLE}"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="17dp"
+                android:textSize="@dimen/text_size"
+                card_view:layout_constraintBottom_toTopOf="@+id/description_event"
+                card_view:layout_constraintEnd_toEndOf="@+id/description_event"
+                card_view:layout_constraintStart_toStartOf="@+id/description_event"
+                card_view:layout_constraintTop_toBottomOf="@+id/tag_event" />
+
+            <TextView
+                android:id="@+id/description_event"
+                android:text="@{TextUtils.isEmpty(publishModel.description) ? View.GONE : View.VISIBLE}"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="8dp"
+                android:textSize="@dimen/text_size"
+                card_view:layout_constraintBottom_toTopOf="@+id/link_event"
+                card_view:layout_constraintEnd_toEndOf="@+id/date_event"
+                card_view:layout_constraintStart_toStartOf="@+id/link_event_word"
+                card_view:layout_constraintTop_toBottomOf="@+id/header_event" />
+
+            <TextView
+                android:id="@+id/link_event_word"
+                android:visibility="@{(publishModel.link.size == 0) ? View.GONE : View.VISIBLE}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="10dp"
+                android:text="@string/link"
+                android:textSize="@dimen/link_size"
+                card_view:layout_constraintBaseline_toBaselineOf="@+id/link_event"
+                card_view:layout_constraintEnd_toStartOf="@+id/link_event"
+                card_view:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/link_event"
+                android:visibility="@{(publishModel.link.size == 0) ? View.GONE : View.VISIBLE}"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:textSize="@dimen/link_size"
+                card_view:layout_constraintBottom_toTopOf="@+id/date_event"
+                card_view:layout_constraintEnd_toEndOf="parent"
+                card_view:layout_constraintStart_toEndOf="@+id/link_event_word"
+                card_view:layout_constraintTop_toBottomOf="@+id/description_event" />
+
+            <TextView
+                android:id="@+id/date_event_word"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="10dp"
+                android:text="@string/date_event"
+                android:textSize="@dimen/link_size"
+                card_view:layout_constraintBottom_toBottomOf="parent"
+                card_view:layout_constraintEnd_toStartOf="@+id/date_event"
+                card_view:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/date_event"
+                android:text="@{String.valueOf(publishModel.date)}"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/link_size"
+                card_view:layout_constraintBottom_toBottomOf="parent"
+                card_view:layout_constraintEnd_toEndOf="parent"
+                card_view:layout_constraintStart_toEndOf="@+id/date_event_word"
+                card_view:layout_constraintTop_toBottomOf="@+id/link_event" />
+
+        </android.support.constraint.ConstraintLayout>
+    </android.support.v7.widget.CardView>
+</layout>

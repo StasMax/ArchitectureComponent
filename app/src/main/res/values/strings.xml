@@ -1,3 +1,36 @@
 <resources>
     <string name="app_name">ArchitectureComponent</string>
+    <string name="header_main">Список публикаций</string>
+    <string name="link">Полезные ссылки:</string>
+    <string name="category">Категории:</string>
+    <string name="tag">Теги:</string>
+    <string name="enter_tag_txt">Теги*:</string>
+    <string name="date_event">Дата события:</string>
+    <string name="enter_data_txt">Введите данные для публикации</string>
+    <string name="enter_category_txt">Категории*:</string>
+    <string name="enter_header_txt">Заголовок:</string>
+    <string name="enter_description_txt">Описание:</string>
+    <string name="enter_link_txt">Адрес ссылки:</string>
+    <string name="enter_file_picture_txt">Загрузка изображений:</string>
+    <string name="button_load_image_text">Выбрать изображение</string>
+    <string name="button_send_post">Опубликовать</string>
+    <string name="empty_list">Список публикаций пуст</string>
+    <string name="star_txt">* - поля обязательные к заполнению</string>
+    <string name="enter_link_txt_name">Название ссылки:</string>
+    <string name="error_fields">Проверьте правильность заполнения полей</string>
+    <string name="error_link_field">Проверьте поля для ссылок</string>
+    <string name="choose_layout_txt">Тип публикации</string>
+    <string name="post">Пост</string>
+    <string name="event">Событие</string>
+    <string name="radio_link">Ссылка</string>
+    <string name="enter_date_txt">Дата:*</string>
+    <string name="success_post">Пост успешно опубликован</string>
+    <string name="load_txt">Загрузка</string>
+    <string name="error_load">Ошибка загрузки</string>
+    <string name="error_network">Проверьте соединение с интернетом</string>
+    <string name="uploaded">Изображение загружено</string>
+    <string name="error_uploading">Ошибка загрузки изображения</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
