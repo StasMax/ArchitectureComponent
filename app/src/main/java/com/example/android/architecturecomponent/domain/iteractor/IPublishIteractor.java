@@ -1,7 +1,6 @@
 package com.example.android.architecturecomponent.domain.iteractor;
 
 import com.example.android.architecturecomponent.data.model.PublishModel;
-import com.google.firebase.storage.StorageReference;
 
 import java.util.List;
 
@@ -15,5 +14,5 @@ public interface IPublishIteractor {
 
     Single<PublishModel>getLastId();
 
-    StorageReference getStorageReference();
+    Single<PublishModel> insertPostInDb(PublishModel publishModel);
 }

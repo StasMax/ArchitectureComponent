@@ -7,6 +7,6 @@ import io.reactivex.Single;
 public interface IPublishRepository {
 
 
-    Single<PublishModel> insertInFirestore(PublishModel publishModel);
+    Single<PublishModel> insertPublishModel(PublishModel publishModel);
 
 }

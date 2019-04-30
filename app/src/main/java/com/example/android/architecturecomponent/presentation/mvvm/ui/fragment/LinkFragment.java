@@ -60,7 +60,7 @@ public class LinkFragment extends BaseFragment {
 
     @OnClick(R.id.button_send_link)
     void onClickPost() {
-        if (model.getCategories().size() != 0 || model.getTags().size() != 0 || model.getLinks().size() != model.getLinksNames().size()) {
+        if (model.getCategories().size() == 0 || model.getTags().size() == 0 || model.getLinks().size() != model.getLinksNames().size()) {
             showMessage(R.string.error_fields);
         } else {
             model.initSendLink();

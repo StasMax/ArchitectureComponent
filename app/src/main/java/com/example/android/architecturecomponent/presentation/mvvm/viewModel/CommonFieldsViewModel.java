@@ -1,8 +1,13 @@
 package com.example.android.architecturecomponent.presentation.mvvm.viewModel;
 
+import com.google.firebase.storage.StorageReference;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import javax.inject.Inject;
+import javax.inject.Named;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -22,17 +27,16 @@ public class CommonFieldsViewModel extends BaseViewModel {
     List<String> links = new ArrayList<>();
     @Getter
     List<String> linksNames = new ArrayList<>();
-    //   private IPublishIteractor publishIteractor;
+    @Getter
+    List<String> fileImage = new ArrayList<>();
+    @Getter
+    @Named("images")
+    @Inject
+    StorageReference ref;
 
     public CommonFieldsViewModel() {
         initFieldId();
     }
-
-  /*  @Inject
-    public CommonFieldsViewModel(IPublishIteractor publishIteractor) {
-            this.publishIteractor = publishIteractor;
-
-    }*/
 
     public void fieldCategory(String category) {
         String[] linkSplit = category.split(", ");

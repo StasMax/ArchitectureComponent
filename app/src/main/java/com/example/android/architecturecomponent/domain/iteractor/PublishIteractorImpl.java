@@ -1,7 +1,5 @@
 package com.example.android.architecturecomponent.domain.iteractor;
 
-import android.arch.paging.ItemKeyedDataSource;
-
 import com.example.android.architecturecomponent.data.model.PublishModel;
 import com.example.android.architecturecomponent.data.repository.IDatabaseRepository;
 import com.example.android.architecturecomponent.data.repository.IPublishRepository;
@@ -39,7 +37,7 @@ public class PublishIteractorImpl implements IPublishIteractor {
     }
 
     @Override
-    public StorageReference getStorageReference() {
-        return databaseRepository.getImageStorageReference();
+    public Single<PublishModel> insertPostInDb(PublishModel publishModel) {
+        return publishRepository.insertPublishModel(publishModel);
     }
 }

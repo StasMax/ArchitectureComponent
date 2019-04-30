@@ -8,13 +8,6 @@ import io.reactivex.schedulers.Schedulers;
 import static com.example.android.architecturecomponent.presentation.Constant.TYPE_LINK;
 
 public class LinkViewModel extends CommonFieldsViewModel {
-    //   private IPublishIteractor publishIteractor;
-
-
-   /* @Inject
-    public LinkViewModel(IPublishIteractor publishIteractor) {
-                this.publishIteractor = publishIteractor;
-    }*/
 
     public void initSendLink() {
 
@@ -27,9 +20,9 @@ public class LinkViewModel extends CommonFieldsViewModel {
                 .typeViewHolder(TYPE_LINK)
                 .build();
 
-     /*   disposeBag(getPublishIteractor().insertPostInDb(publishModel)
+        disposeBag(getPublishIteractor().insertPostInDb(publishModel)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe());*/
+                .subscribe());
     }
 }

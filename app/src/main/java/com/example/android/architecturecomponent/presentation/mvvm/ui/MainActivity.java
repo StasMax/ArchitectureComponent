@@ -42,17 +42,13 @@ public class MainActivity extends BaseActivity {
         recyclerView = binding.recyclerPublishes;
         textEmptyList = binding.txtEmptyList;
         progressBar = binding.mainProgress;
-        progressBar.setVisibility(View.GONE);
         ButterKnife.bind(this);
         MainViewModel viewModel = ViewModelProviders.of(this, viewModelFactory).get(MainViewModel.class);
         PublishDiffUtilCallback publishDiffUtil = new PublishDiffUtilCallback();
         PublishPagedListAdapter adapter = new PublishPagedListAdapter(publishDiffUtil.diffUtilCallback);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, OrientationHelper.VERTICAL, false));
         recyclerView.setAdapter(adapter);
-      /*  compositeDisposable.add(viewModel.getPagedListObservable()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(pagedList -> adapter.submitList(pagedList)));*/
+        progressBar.setVisibility(View.GONE);
         viewModel.getPagedList().observe(this, adapter::submitList);
     }
 

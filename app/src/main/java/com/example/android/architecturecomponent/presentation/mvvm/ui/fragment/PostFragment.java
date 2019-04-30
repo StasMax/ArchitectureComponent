@@ -1,8 +1,10 @@
 package com.example.android.architecturecomponent.presentation.mvvm.ui.fragment;
 
 
+import android.app.ProgressDialog;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,12 +13,16 @@ import android.view.ViewGroup;
 import com.example.android.architecturecomponent.R;
 import com.example.android.architecturecomponent.presentation.app.App;
 import com.example.android.architecturecomponent.presentation.mvvm.viewModel.PostViewModel;
+import com.google.firebase.storage.StorageReference;
+
+import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
 import butterknife.Unbinder;
 
+import static android.app.Activity.RESULT_OK;
 import static com.example.android.architecturecomponent.presentation.Constant.PICK_IMAGE;
 
 public class PostFragment extends BaseFragment {
@@ -29,7 +35,6 @@ public class PostFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        App.getComponent().inject(this);
         View view = inflater.inflate(R.layout.fragment_post, container, false);
         unbinder = ButterKnife.bind(this, view);
         model = ViewModelProviders.of(this).get(PostViewModel.class);
@@ -87,7 +92,31 @@ public class PostFragment extends BaseFragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        model.initUploadImage(requestCode, resultCode, data);
+        if (requestCode == PICK_IMAGE && resultCode == RESULT_OK
+                && data != null && data.getData() != null) {
+            Uri filePath = data.getData();
+            if (filePath != null) {
+                ProgressDialog progressDialog = new ProgressDialog(getContext());
+                progressDialog.setTitle("Загрузка...");
+                progressDialog.show();
+                StorageReference ref = model.getRef();
+                ref.putFile(filePath)
+                        .addOnSuccessListener(taskSnapshot -> {
+                            progressDialog.dismiss();
+                            ref.getDownloadUrl().addOnCompleteListener(task -> model.getFileImage().add(task.getResult().toString()));
+                            showMessage(R.string.uploaded);
+                        })
+                        .addOnFailureListener(e -> {
+                            progressDialog.dismiss();
+                            showMessage(R.string.error_uploading);
+                        })
+                        .addOnProgressListener(taskSnapshot -> {
+                            double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot
+                                    .getTotalByteCount());
+                            progressDialog.setMessage("Uploaded " + (int) progress + "%");
+                        });
+            }
+        }
     }
 
     @Override

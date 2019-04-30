@@ -51,6 +51,7 @@ public class EventViewHolder extends RecyclerView.ViewHolder {
         if (publishModel == null) {
             textLoad.setText(R.string.load_txt);
         } else {
+            textLoad.setVisibility(GONE);
             if (publishModel.getCategory() != null && publishModel.getCategory().size() != 0) {
                 for (String category : publishModel.getCategory()) {
                     categoryBuilder.append(" ").append(category).append(",");
