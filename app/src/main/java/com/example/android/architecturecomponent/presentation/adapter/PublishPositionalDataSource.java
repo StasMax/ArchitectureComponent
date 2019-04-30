@@ -4,19 +4,20 @@ import android.support.annotation.NonNull;
 
 import com.example.android.architecturecomponent.data.model.PublishModel;
 import com.example.android.architecturecomponent.domain.iteractor.IPublishIteractor;
-import com.example.android.architecturecomponent.presentation.app.App;
 
 import java.util.Comparator;
 
-import javax.inject.Inject;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 
 public class PublishPositionalDataSource extends android.arch.paging.ItemKeyedDataSource<Long, PublishModel> {
 
-    IPublishIteractor publishIteractor;
+    private IPublishIteractor publishIteractor;
+    private CompositeDisposable disposables;
 
-    @Inject
-    public PublishPositionalDataSource(IPublishIteractor publishIteractor) {
+    public PublishPositionalDataSource(IPublishIteractor publishIteractor, CompositeDisposable compositeDisposable) {
         this.publishIteractor = publishIteractor;
+        this.disposables = compositeDisposable;
     }
 
     public Comparator<PublishModel> compareByType = (o1, o2) -> {
@@ -30,12 +31,18 @@ public class PublishPositionalDataSource extends android.arch.paging.ItemKeyedDa
 
     @Override
     public void loadInitial(@NonNull LoadInitialParams<Long> params, @NonNull LoadInitialCallback<PublishModel> callback) {
-        publishIteractor.getPublishModelsList(0, params.requestedLoadSize, callback);
+        disposables.add(publishIteractor.getFirstPublishModelsList(0, params.requestedLoadSize)
+               // .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(publishModels -> callback.onResult(publishModels, 0, publishModels.size())));
     }
 
     @Override
     public void loadAfter(@NonNull LoadParams<Long> params, @NonNull LoadCallback<PublishModel> callback) {
-        publishIteractor.getPublishModelsList(params.key, params.requestedLoadSize, callback);
+        disposables.add(publishIteractor.getNextPublishModelsList(0, params.requestedLoadSize)
+              //  .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(callback::onResult));
     }
 
     @Override

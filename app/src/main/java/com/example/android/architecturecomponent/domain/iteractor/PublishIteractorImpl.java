@@ -24,8 +24,13 @@ public class PublishIteractorImpl implements IPublishIteractor {
     }
 
     @Override
-    public void getPublishModelsList(long startRank, int size, ItemKeyedDataSource.LoadCallback<PublishModel> callback) {
-        databaseRepository.getPublishModels(startRank, size, callback);
+    public Single<List<PublishModel>> getNextPublishModelsList(long startRank, int size) {
+        return databaseRepository.getNextPublishModels(startRank, size);
+    }
+
+    @Override
+    public Single<List<PublishModel>> getFirstPublishModelsList(long startRank, int size) {
+        return databaseRepository.getFirstPublishModels(startRank, size);
     }
 
     @Override

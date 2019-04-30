@@ -5,20 +5,21 @@ import android.arch.paging.DataSource;
 import com.example.android.architecturecomponent.data.model.PublishModel;
 import com.example.android.architecturecomponent.domain.iteractor.IPublishIteractor;
 
-import javax.inject.Inject;
+import io.reactivex.disposables.CompositeDisposable;
 
 public class PublishSourceFactory extends DataSource.Factory<Long, PublishModel> {
 
-    IPublishIteractor publishIteractor;
+    private IPublishIteractor publishIteractor;
+    private CompositeDisposable compositeDisposable;
 
-    @Inject
-    public PublishSourceFactory(IPublishIteractor publishIteractor) {
+    public PublishSourceFactory(IPublishIteractor publishIteractor, CompositeDisposable compositeDisposable) {
         this.publishIteractor = publishIteractor;
+        this.compositeDisposable = compositeDisposable;
     }
 
     @Override
     public DataSource<Long, PublishModel> create() {
-        return new PublishPositionalDataSource(publishIteractor);
+        return new PublishPositionalDataSource(publishIteractor, compositeDisposable);
     }
 }
 

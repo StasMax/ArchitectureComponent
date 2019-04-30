@@ -9,21 +9,18 @@ import com.example.android.architecturecomponent.data.model.PublishModel;
 import com.example.android.architecturecomponent.domain.iteractor.IPublishIteractor;
 import com.example.android.architecturecomponent.presentation.adapter.PublishSourceFactory;
 
-import javax.inject.Inject;
-
 import io.reactivex.Observable;
 
 import static com.example.android.architecturecomponent.presentation.Constant.LOAD_FIRST_ITEM_SIZE;
 import static com.example.android.architecturecomponent.presentation.Constant.LOAD_ITEM_SIZE;
 
 public class MainViewModel extends BaseViewModel {
+
     private PublishSourceFactory publishSourceFactory;
     private PagedList.Config config;
 
-    @Inject
     public MainViewModel(IPublishIteractor publishIteractor) {
-        super(publishIteractor);
-        publishSourceFactory = new PublishSourceFactory(publishIteractor);
+        publishSourceFactory = new PublishSourceFactory(publishIteractor, compositeDisposable);
         config = (new PagedList.Config.Builder())
                 .setEnablePlaceholders(false)
                 .setInitialLoadSizeHint(LOAD_FIRST_ITEM_SIZE)
@@ -38,4 +35,5 @@ public class MainViewModel extends BaseViewModel {
     public Observable<PagedList<PublishModel>> getPagedListObservable() {
         return new RxPagedListBuilder<>(publishSourceFactory, config).buildObservable();
     }
+
 }

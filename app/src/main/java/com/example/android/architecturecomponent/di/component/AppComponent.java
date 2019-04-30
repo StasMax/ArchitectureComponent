@@ -16,7 +16,7 @@ import dagger.Component;
 @Component(dependencies = {}, modules = {PublishModule.class})
 public interface AppComponent {
 
-  //  void inject(MainActivity mainActivity);
+    void inject(MainActivity mainActivity);
 
     void inject(PostFragment postFragment);
 
@@ -26,5 +26,4 @@ public interface AppComponent {
 
     void inject(MainViewModel mainViewModel);
 
-    void inject(PublishPositionalDataSource positionalDataSource);
 }

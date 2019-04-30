@@ -1,7 +1,7 @@
 package com.example.android.architecturecomponent.data.repository;
 
-import android.arch.paging.ItemKeyedDataSource;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.example.android.architecturecomponent.data.model.PublishModel;
 import com.google.firebase.database.DataSnapshot;
@@ -35,10 +35,35 @@ public class DatabaseRepositoryImpl implements IDatabaseRepository {
     }
 
     @Override
-    public void getPublishModels(long startRank, int size, @NonNull final ItemKeyedDataSource.LoadCallback<PublishModel> callback) {
+    public Single<List<PublishModel>> getFirstPublishModels(long startRank, int size) {
         List<PublishModel> models = new ArrayList<>();
 
-         firestoreDB.collection("publishers")
+        return Single.create(subscriber -> firestoreDB.collection("publishers")
+                .whereGreaterThan("id", startRank)
+              //  .orderBy("id")
+             //   .startAt(startRank)
+                .limit(size)
+                .addSnapshotListener((snapshots, e) -> {
+
+                    if (e != null) {
+                        logErrorDatabase(e.getMessage());
+                        return;
+                    }
+
+                    for (DocumentSnapshot doc : snapshots.getDocuments()) {
+                        models.add(doc.toObject(PublishModel.class));
+                    }
+                    Log.e("QQQ", models.toString());
+                    subscriber.onSuccess(models);
+
+                }));
+    }
+
+    @Override
+    public Single<List<PublishModel>> getNextPublishModels(long startRank, int size) {
+        List<PublishModel> models = new ArrayList<>();
+
+        return Single.create(subscriber -> firestoreDB.collection("publishers")
                 .whereGreaterThan("id", startRank)
                 .limit(size).addSnapshotListener((snapshots, e) -> {
 
@@ -51,29 +76,17 @@ public class DatabaseRepositoryImpl implements IDatabaseRepository {
                         models.add(doc.toObject(PublishModel.class));
                     }
 
-                    if(models.size() == 0){
-                        return;
-                    }
+                    subscriber.onSuccess(models);
 
-
-
-                    if(callback instanceof ItemKeyedDataSource.LoadInitialCallback){
-                        //initial load
-                        ItemKeyedDataSource.LoadInitialCallback loadInitialCallback = (ItemKeyedDataSource.LoadInitialCallback) callback;
-                        loadInitialCallback.onResult(models, 0, models.size());
-                    }else{
-                        //next pages load
-                        callback.onResult(models);
-                    }
-                });
+                }));
     }
 
     @Override
     public Single<PublishModel> getLastId() {
         List<PublishModel> models = new ArrayList<>();
         Query query = null;
-
-        return Single.create(subscriber -> query.addListenerForSingleValueEvent(new ValueEventListener() {
+return null;
+      /*  return Single.create(subscriber -> query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
@@ -86,7 +99,7 @@ public class DatabaseRepositoryImpl implements IDatabaseRepository {
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 logErrorDatabase(databaseError.getMessage());
             }
-        }));
+        }));*/
     }
 
     @Override

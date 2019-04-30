@@ -1,7 +1,5 @@
 package com.example.android.architecturecomponent.domain.iteractor;
 
-import android.arch.paging.ItemKeyedDataSource;
-
 import com.example.android.architecturecomponent.data.model.PublishModel;
 import com.google.firebase.storage.StorageReference;
 
@@ -11,9 +9,9 @@ import io.reactivex.Single;
 
 public interface IPublishIteractor {
 
+    Single<List<PublishModel>> getNextPublishModelsList(long startRank, int size);
 
-
-    void getPublishModelsList(long startRank, int size, ItemKeyedDataSource.LoadCallback<PublishModel> callback);
+    Single<List<PublishModel>> getFirstPublishModelsList(long startRank, int size);
 
     Single<PublishModel>getLastId();
 

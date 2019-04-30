@@ -11,7 +11,7 @@ import io.reactivex.disposables.Disposable;
 import lombok.Getter;
 
 public class BaseViewModel extends ViewModel {
-    private CompositeDisposable compositeDisposable = new CompositeDisposable();
+    CompositeDisposable compositeDisposable = new CompositeDisposable();
     @Getter
     private IPublishIteractor publishIteractor;
 

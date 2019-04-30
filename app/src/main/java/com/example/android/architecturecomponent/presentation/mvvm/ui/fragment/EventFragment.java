@@ -21,7 +21,6 @@ import butterknife.Unbinder;
 import static com.example.android.architecturecomponent.presentation.Constant.PICK_IMAGE;
 
 public class EventFragment extends BaseFragment {
-    private ProgressDialog progressDialog;
     private EventViewModel model;
     private Unbinder unbinder;
 
