@@ -3,19 +3,19 @@ package com.example.android.architecturecomponent.presentation.mvvm.ui;
 import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.example.android.architecturecomponent.R;
-import com.example.android.architecturecomponent.presentation.adapter.FragmentsViewPagerAdapter;
 
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class PublishActivity extends FragmentActivity {
+    private NavController navController;
     @BindView(R.id.radioGroup)
     RadioGroup radioGroup;
     @BindView(R.id.radioButtonPost)
@@ -24,29 +24,25 @@ public class PublishActivity extends FragmentActivity {
     RadioButton radioButtonEvent;
     @BindView(R.id.radioButtonLink)
     RadioButton radioButtonLink;
-    @BindView(R.id.pager)
-    ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_publish);
         ButterKnife.bind(this);
-        FragmentsViewPagerAdapter pagerAdapter = new FragmentsViewPagerAdapter(getSupportFragmentManager());
-        viewPager.setAdapter(pagerAdapter);
-        viewPager.beginFakeDrag();
+        navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
             switch (checkedId) {
                 case -1:
                     break;
                 case R.id.radioButtonPost:
-                    viewPager.setCurrentItem(0);
+                    navController.navigate(R.id.postFragment);
                     break;
                 case R.id.radioButtonEvent:
-                    viewPager.setCurrentItem(1);
+                    navController.navigate(R.id.eventFragment);
                     break;
                 case R.id.radioButtonLink:
-                    viewPager.setCurrentItem(2);
+                    navController.navigate(R.id.linkFragment);
                     break;
             }
         });

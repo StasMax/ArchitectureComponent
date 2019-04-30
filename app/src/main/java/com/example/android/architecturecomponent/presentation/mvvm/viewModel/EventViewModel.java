@@ -3,9 +3,12 @@ package com.example.android.architecturecomponent.presentation.mvvm.viewModel;
 import android.annotation.SuppressLint;
 
 import com.example.android.architecturecomponent.data.model.PublishModel;
+import com.example.android.architecturecomponent.domain.iteractor.IPublishIteractor;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+
+import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -14,8 +17,15 @@ import static com.example.android.architecturecomponent.presentation.Constant.TY
 
 public class EventViewModel extends CommonFieldsViewModel {
 
-    public void initSendEvent() {
+    private IPublishIteractor publishIteractor;
 
+    @Inject
+    public EventViewModel(IPublishIteractor publishIteractor) {
+        super(publishIteractor);
+        this.publishIteractor = publishIteractor;
+    }
+
+    public void initSendEvent() {
         PublishModel publishModel = PublishModel.builder()
                 .id(lastId)
                 .category(categories)
@@ -29,7 +39,7 @@ public class EventViewModel extends CommonFieldsViewModel {
                 .typeViewHolder(TYPE_EVENT)
                 .build();
 
-        disposeBag(getPublishIteractor().insertPostInDb(publishModel)
+        disposeBag(publishIteractor.insertPostInDb(publishModel)
                 .doAfterSuccess(publishModel12 -> fileImage.clear())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

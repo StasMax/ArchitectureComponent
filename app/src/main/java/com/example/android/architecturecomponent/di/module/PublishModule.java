@@ -17,9 +17,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import java.util.UUID;
-
-import javax.inject.Named;
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -35,8 +32,8 @@ public class PublishModule {
 
     @Provides
     @Singleton
-    IDatabaseRepository databaseRepository(DatabaseReference databaseReference, StorageReference storageReference) {
-        return new DatabaseRepositoryImpl(databaseReference, storageReference);
+    IDatabaseRepository databaseRepository(DatabaseReference databaseReference) {
+        return new DatabaseRepositoryImpl(databaseReference);
     }
 
     @Provides
@@ -73,12 +70,5 @@ public class PublishModule {
     @Singleton
     Api getApi() {
         return new RetrofitInit().getRetrofit().create(Api.class);
-    }
-
-    @Named("images")
-    @Provides
-    @Singleton
-    StorageReference getImageStorageReference(StorageReference storageReference) {
-        return storageReference.child("images/" + UUID.randomUUID().toString());
     }
 }

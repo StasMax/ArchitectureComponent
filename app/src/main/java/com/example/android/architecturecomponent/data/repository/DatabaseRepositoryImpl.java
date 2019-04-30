@@ -8,11 +8,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import javax.inject.Inject;
 
@@ -23,14 +21,11 @@ import static com.example.android.architecturecomponent.presentation.Logger.logE
 
 
 public class DatabaseRepositoryImpl implements IDatabaseRepository {
-
-    private StorageReference storageReference;
     private DatabaseReference databaseReference;
 
     @Inject
-    public DatabaseRepositoryImpl(DatabaseReference databaseReference, StorageReference storageReference) {
+    public DatabaseRepositoryImpl(DatabaseReference databaseReference) {
         this.databaseReference = databaseReference;
-        this.storageReference = storageReference;
     }
 
     @Override

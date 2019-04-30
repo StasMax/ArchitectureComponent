@@ -10,6 +10,9 @@ import android.view.ViewGroup;
 import com.example.android.architecturecomponent.R;
 import com.example.android.architecturecomponent.presentation.app.App;
 import com.example.android.architecturecomponent.presentation.mvvm.viewModel.LinkViewModel;
+import com.example.android.architecturecomponent.presentation.mvvm.viewModel.ViewModelFactory;
+
+import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -20,6 +23,8 @@ public class LinkFragment extends BaseFragment {
 
     private LinkViewModel model;
     private Unbinder unbinder;
+    @Inject
+    ViewModelFactory viewModelFactory;
 
     public LinkFragment() {
     }
@@ -30,7 +35,7 @@ public class LinkFragment extends BaseFragment {
         App.getComponent().inject(this);
         View view = inflater.inflate(R.layout.fragment_link, container, false);
         unbinder = ButterKnife.bind(this, view);
-        model = ViewModelProviders.of(this).get(LinkViewModel.class);
+        model = ViewModelProviders.of(this, viewModelFactory).get(LinkViewModel.class);
         return view;
     }
 

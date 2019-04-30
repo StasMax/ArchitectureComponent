@@ -1,5 +1,6 @@
 package com.example.android.architecturecomponent.presentation.mvvm.viewModel;
 
+import com.example.android.architecturecomponent.domain.iteractor.IPublishIteractor;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
@@ -29,12 +30,11 @@ public class CommonFieldsViewModel extends BaseViewModel {
     List<String> linksNames = new ArrayList<>();
     @Getter
     List<String> fileImage = new ArrayList<>();
-    @Getter
-    @Named("images")
-    @Inject
-    StorageReference ref;
+    private IPublishIteractor publishIteractor;
 
-    public CommonFieldsViewModel() {
+    @Inject
+    public CommonFieldsViewModel(IPublishIteractor publishIteractor) {
+        this.publishIteractor = publishIteractor;
         initFieldId();
     }
 
@@ -67,7 +67,7 @@ public class CommonFieldsViewModel extends BaseViewModel {
     }
 
     private void initFieldId() {
-        disposeBag(getPublishIteractor().getLastId()
+        disposeBag(publishIteractor.getLastId()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(publishModel -> setupId(publishModel.getId())));

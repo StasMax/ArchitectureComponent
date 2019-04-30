@@ -7,10 +7,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.android.architecturecomponent.R;
 import com.example.android.architecturecomponent.data.model.PublishModel;
-import com.squareup.picasso.Picasso;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -89,7 +88,8 @@ public class PostViewHolder extends RecyclerView.ViewHolder {
             }
 
             if (publishModel.getImageFile() != null && publishModel.getImageFile().size() != 0) {
-                Picasso.with(itemView.getContext()).load(publishModel.getImageFile().get(0)).into(postFilePicture);
+
+                Glide.with(itemView.getContext()).load(publishModel.getImageFile().get(0)).into(postFilePicture);
             } else {
                 postFilePicture.setVisibility(View.GONE);
             }

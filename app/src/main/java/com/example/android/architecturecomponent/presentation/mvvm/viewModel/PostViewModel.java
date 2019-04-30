@@ -1,6 +1,7 @@
 package com.example.android.architecturecomponent.presentation.mvvm.viewModel;
 
 import com.example.android.architecturecomponent.data.model.PublishModel;
+import com.example.android.architecturecomponent.domain.iteractor.IPublishIteractor;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -8,6 +9,13 @@ import io.reactivex.schedulers.Schedulers;
 import static com.example.android.architecturecomponent.presentation.Constant.TYPE_POST;
 
 public class PostViewModel extends CommonFieldsViewModel {
+
+    private IPublishIteractor publishIteractor;
+
+    public PostViewModel(IPublishIteractor publishIteractor) {
+        super(publishIteractor);
+        this.publishIteractor = publishIteractor;
+    }
 
     public void initSendPost() {
 
@@ -23,7 +31,7 @@ public class PostViewModel extends CommonFieldsViewModel {
                 .typeViewHolder(TYPE_POST)
                 .build();
 
-        disposeBag(getPublishIteractor().insertPostInDb(publishModel)
+        disposeBag(publishIteractor.insertPostInDb(publishModel)
                 .doAfterSuccess(publishModel12 -> fileImage.clear())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

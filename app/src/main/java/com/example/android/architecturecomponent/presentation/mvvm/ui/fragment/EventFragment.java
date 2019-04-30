@@ -12,7 +12,12 @@ import android.view.ViewGroup;
 import com.example.android.architecturecomponent.R;
 import com.example.android.architecturecomponent.presentation.app.App;
 import com.example.android.architecturecomponent.presentation.mvvm.viewModel.EventViewModel;
+import com.example.android.architecturecomponent.presentation.mvvm.viewModel.ViewModelFactory;
 import com.google.firebase.storage.StorageReference;
+
+import java.util.UUID;
+
+import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -25,6 +30,10 @@ import static com.example.android.architecturecomponent.presentation.Constant.PI
 public class EventFragment extends BaseFragment {
     private EventViewModel model;
     private Unbinder unbinder;
+    @Inject
+    StorageReference storageReference;
+    @Inject
+    ViewModelFactory viewModelFactory;
 
     public EventFragment() {
     }
@@ -32,9 +41,10 @@ public class EventFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        App.getComponent().inject(this);
         View view = inflater.inflate(R.layout.fragment_event, container, false);
         unbinder = ButterKnife.bind(this, view);
-        model = ViewModelProviders.of(this).get(EventViewModel.class);
+        model = ViewModelProviders.of(this, viewModelFactory).get(EventViewModel.class);
         return view;
     }
 
@@ -96,7 +106,7 @@ public class EventFragment extends BaseFragment {
                 ProgressDialog progressDialog = new ProgressDialog(getContext());
                 progressDialog.setTitle("Загрузка...");
                 progressDialog.show();
-                StorageReference ref = model.getRef();
+                StorageReference ref = storageReference.child("images/" + UUID.randomUUID().toString());
                 ref.putFile(filePath)
                         .addOnSuccessListener(taskSnapshot -> {
                             progressDialog.dismiss();

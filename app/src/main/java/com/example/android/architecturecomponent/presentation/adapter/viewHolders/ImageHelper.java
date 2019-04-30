@@ -3,12 +3,12 @@ package com.example.android.architecturecomponent.presentation.adapter.viewHolde
 import android.view.View;
 import android.widget.ImageView;
 
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
 
 class ImageHelper {
     ImageView setImageInFlipper(View itemView, String imageUrl) {
         ImageView image = new ImageView(itemView.getContext());
-        Picasso.with(itemView.getContext()).load(imageUrl).into(image);
+        Glide.with(itemView.getContext()).load(imageUrl).into(image);
         return image;
     }
 }

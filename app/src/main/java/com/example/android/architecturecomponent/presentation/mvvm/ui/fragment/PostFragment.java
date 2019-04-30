@@ -13,7 +13,10 @@ import android.view.ViewGroup;
 import com.example.android.architecturecomponent.R;
 import com.example.android.architecturecomponent.presentation.app.App;
 import com.example.android.architecturecomponent.presentation.mvvm.viewModel.PostViewModel;
+import com.example.android.architecturecomponent.presentation.mvvm.viewModel.ViewModelFactory;
 import com.google.firebase.storage.StorageReference;
+
+import java.util.UUID;
 
 import javax.inject.Inject;
 
@@ -28,6 +31,10 @@ import static com.example.android.architecturecomponent.presentation.Constant.PI
 public class PostFragment extends BaseFragment {
     private PostViewModel model;
     private Unbinder unbinder;
+    @Inject
+    StorageReference storageReference;
+    @Inject
+    ViewModelFactory viewModelFactory;
 
     public PostFragment() {
     }
@@ -35,9 +42,10 @@ public class PostFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        App.getComponent().inject(this);
         View view = inflater.inflate(R.layout.fragment_post, container, false);
         unbinder = ButterKnife.bind(this, view);
-        model = ViewModelProviders.of(this).get(PostViewModel.class);
+        model = ViewModelProviders.of(this, viewModelFactory).get(PostViewModel.class);
         return view;
     }
 
@@ -73,7 +81,7 @@ public class PostFragment extends BaseFragment {
 
     @OnClick(R.id.button_send_post)
     void onClickPost() {
-        if (model.getCategories().size() != 0 || model.getTags().size() != 0 || model.getLinks().size() != model.getLinksNames().size()) {
+        if (model.getCategories().size() == 0 || model.getTags().size() == 0 || model.getLinks().size() != model.getLinksNames().size()) {
             showMessage(R.string.error_fields);
         } else {
             model.initSendPost();
@@ -99,7 +107,7 @@ public class PostFragment extends BaseFragment {
                 ProgressDialog progressDialog = new ProgressDialog(getContext());
                 progressDialog.setTitle("Загрузка...");
                 progressDialog.show();
-                StorageReference ref = model.getRef();
+                StorageReference ref = storageReference.child("images/" + UUID.randomUUID().toString());
                 ref.putFile(filePath)
                         .addOnSuccessListener(taskSnapshot -> {
                             progressDialog.dismiss();

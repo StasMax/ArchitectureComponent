@@ -1,6 +1,7 @@
 package com.example.android.architecturecomponent.presentation.mvvm.viewModel;
 
 import com.example.android.architecturecomponent.data.model.PublishModel;
+import com.example.android.architecturecomponent.domain.iteractor.IPublishIteractor;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -9,8 +10,14 @@ import static com.example.android.architecturecomponent.presentation.Constant.TY
 
 public class LinkViewModel extends CommonFieldsViewModel {
 
-    public void initSendLink() {
+    private IPublishIteractor publishIteractor;
 
+    public LinkViewModel(IPublishIteractor publishIteractor) {
+        super(publishIteractor);
+        this.publishIteractor = publishIteractor;
+    }
+
+    public void initSendLink() {
         PublishModel publishModel = PublishModel.builder()
                 .id(lastId)
                 .category(categories)
@@ -20,7 +27,7 @@ public class LinkViewModel extends CommonFieldsViewModel {
                 .typeViewHolder(TYPE_LINK)
                 .build();
 
-        disposeBag(getPublishIteractor().insertPostInDb(publishModel)
+        disposeBag(publishIteractor.insertPostInDb(publishModel)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe());
