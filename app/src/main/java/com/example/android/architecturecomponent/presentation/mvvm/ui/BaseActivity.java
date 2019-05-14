@@ -2,6 +2,7 @@ package com.example.android.architecturecomponent.presentation.mvvm.ui;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
+
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 

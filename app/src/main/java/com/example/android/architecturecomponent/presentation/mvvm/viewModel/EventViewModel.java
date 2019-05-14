@@ -2,6 +2,7 @@ package com.example.android.architecturecomponent.presentation.mvvm.viewModel;
 
 import android.annotation.SuppressLint;
 
+import com.example.android.architecturecomponent.R;
 import com.example.android.architecturecomponent.data.model.PublishModel;
 import com.example.android.architecturecomponent.domain.iteractor.IPublishIteractor;
 
@@ -12,18 +13,28 @@ import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import lombok.val;
 
 import static com.example.android.architecturecomponent.presentation.Constant.TYPE_EVENT;
 
 public class EventViewModel extends CommonFieldsViewModel {
 
     private IPublishIteractor publishIteractor;
+    val showToast = ActionLiveData<String>()
 
     @Inject
     public EventViewModel(IPublishIteractor publishIteractor) {
         super(publishIteractor);
         this.publishIteractor = publishIteractor;
     }
+
+    public void onClickButtonSendEvent(){
+        if (getCategories().size() == 0 || getTags().size() == 0 || getLinks().size() != getLinksNames().size()) {
+            showMessage(R.string.error_fields);
+        } else {
+            initSendEvent();
+            showMessage(R.string.success_post);
+        }    }
 
     public void initSendEvent() {
         PublishModel publishModel = PublishModel.builder()

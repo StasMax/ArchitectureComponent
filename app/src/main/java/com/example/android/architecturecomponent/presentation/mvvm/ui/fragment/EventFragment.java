@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import com.example.android.architecturecomponent.R;
 import com.example.android.architecturecomponent.presentation.app.App;
 import com.example.android.architecturecomponent.presentation.mvvm.viewModel.EventViewModel;
+import com.example.android.architecturecomponent.presentation.mvvm.viewModel.PostViewModel;
 import com.example.android.architecturecomponent.presentation.mvvm.viewModel.ViewModelFactory;
 import com.google.firebase.storage.StorageReference;
 
@@ -27,7 +28,7 @@ import butterknife.Unbinder;
 import static android.app.Activity.RESULT_OK;
 import static com.example.android.architecturecomponent.presentation.Constant.PICK_IMAGE;
 
-public class EventFragment extends BaseFragment {
+public class EventFragment extends AbstractFragment<EventViewModel> {
     private EventViewModel model;
     private Unbinder unbinder;
     @Inject
@@ -80,12 +81,7 @@ public class EventFragment extends BaseFragment {
 
     @OnClick(R.id.button_send_event)
     void onClickPost() {
-        if (model.getCategories().size() == 0 || model.getTags().size() == 0 || model.getLinks().size() != model.getLinksNames().size()) {
-            showMessage(R.string.error_fields);
-        } else {
-            model.initSendEvent();
-            showMessage(R.string.success_post);
-        }
+        model.onClickButtonSendEvent();
     }
 
     @OnClick(R.id.button_image_event)
@@ -131,5 +127,10 @@ public class EventFragment extends BaseFragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    @Override
+    protected void onViewModelReady() {
+
     }
 }
