@@ -54,7 +54,6 @@ public class EventFragment extends BaseFragment {
         if (getActivity() == null || getActivity().getCurrentFocus() == null) {
             return;
         }
-
         String text = s.toString();
         switch (getActivity().getCurrentFocus().getId()) {
             case R.id.edit_category_event:
@@ -124,7 +123,6 @@ public class EventFragment extends BaseFragment {
                         });
             }
         }
-
     }
 
     @Override
