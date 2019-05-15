@@ -62,8 +62,8 @@ public class PublishModule {
 
     @Provides
     @Singleton
-    ViewModelProvider.Factory getViewModelFactory(IPublishIteractor publishIteractor) {
-        return new ViewModelFactory(publishIteractor);
+    ViewModelProvider.Factory getViewModelFactory(IPublishIteractor publishIteractor, StorageReference storageReference) {
+        return new ViewModelFactory(publishIteractor, storageReference);
     }
 
     @Provides

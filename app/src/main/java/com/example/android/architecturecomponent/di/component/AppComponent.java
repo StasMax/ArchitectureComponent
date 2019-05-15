@@ -1,8 +1,8 @@
 package com.example.android.architecturecomponent.di.component;
 
 import com.example.android.architecturecomponent.di.module.PublishModule;
-import com.example.android.architecturecomponent.presentation.adapter.PublishPositionalDataSource;
 import com.example.android.architecturecomponent.presentation.mvvm.ui.MainActivity;
+import com.example.android.architecturecomponent.presentation.mvvm.ui.fragment.BaseFragment;
 import com.example.android.architecturecomponent.presentation.mvvm.ui.fragment.EventFragment;
 import com.example.android.architecturecomponent.presentation.mvvm.ui.fragment.LinkFragment;
 import com.example.android.architecturecomponent.presentation.mvvm.ui.fragment.PostFragment;
@@ -26,4 +26,5 @@ public interface AppComponent {
 
     void inject(MainViewModel mainViewModel);
 
+    void inject(BaseFragment baseFragment);
 }
