@@ -1,9 +1,7 @@
 package com.example.android.architecturecomponent.presentation.mvvm.ui.fragment;
 
 import android.app.ProgressDialog;
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,20 +10,11 @@ import android.view.ViewGroup;
 import com.example.android.architecturecomponent.R;
 import com.example.android.architecturecomponent.presentation.app.App;
 import com.example.android.architecturecomponent.presentation.mvvm.viewModel.EventViewModel;
-import com.example.android.architecturecomponent.presentation.mvvm.viewModel.PostViewModel;
-import com.example.android.architecturecomponent.presentation.mvvm.viewModel.ViewModelFactory;
-import com.google.firebase.storage.StorageReference;
-
-import java.util.UUID;
-
-import javax.inject.Inject;
-
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
 import butterknife.Unbinder;
 
-import static android.app.Activity.RESULT_OK;
 import static com.example.android.architecturecomponent.presentation.Constant.PICK_IMAGE;
 
 public class EventFragment extends AbstractFragment<EventViewModel> {

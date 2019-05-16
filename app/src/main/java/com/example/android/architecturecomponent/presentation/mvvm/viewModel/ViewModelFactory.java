@@ -5,19 +5,19 @@ import android.arch.lifecycle.ViewModelProvider;
 import android.support.annotation.NonNull;
 
 import com.example.android.architecturecomponent.domain.iteractor.IPublishIteractor;
+import com.example.android.architecturecomponent.presentation.app.App;
 import com.google.firebase.storage.StorageReference;
 
 import javax.inject.Inject;
 
 public class ViewModelFactory implements ViewModelProvider.Factory {
-
-    private IPublishIteractor publishIteractor;
-    private StorageReference storageReference;
-
     @Inject
-    public ViewModelFactory(IPublishIteractor publishIteractor, StorageReference storageReference) {
-        this.publishIteractor = publishIteractor;
-        this.storageReference = storageReference;
+    IPublishIteractor publishIteractor;
+    @Inject
+    StorageReference storageReference;
+
+    public ViewModelFactory() {
+        App.getComponent().inject(this);
     }
 
     @NonNull

@@ -1,7 +1,5 @@
 package com.example.android.architecturecomponent.presentation.mvvm.ui.fragment;
 
-
-import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,10 +8,6 @@ import android.view.ViewGroup;
 import com.example.android.architecturecomponent.R;
 import com.example.android.architecturecomponent.presentation.app.App;
 import com.example.android.architecturecomponent.presentation.mvvm.viewModel.LinkViewModel;
-import com.example.android.architecturecomponent.presentation.mvvm.viewModel.ViewModelFactory;
-
-import javax.inject.Inject;
-
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;

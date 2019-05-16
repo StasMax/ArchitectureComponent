@@ -14,30 +14,22 @@ import com.example.android.architecturecomponent.R;
 import com.example.android.architecturecomponent.databinding.ActivityMainBinding;
 import com.example.android.architecturecomponent.presentation.adapter.PublishDiffUtilCallback;
 import com.example.android.architecturecomponent.presentation.adapter.PublishPagedListAdapter;
-import com.example.android.architecturecomponent.presentation.app.App;
 import com.example.android.architecturecomponent.presentation.mvvm.viewModel.MainViewModel;
 import com.example.android.architecturecomponent.presentation.mvvm.viewModel.ViewModelFactory;
-
-
-import javax.inject.Inject;
-
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class MainActivity extends BaseActivity {
-    @Inject
-    ViewModelFactory viewModelFactory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        App.getComponent().inject(MainActivity.this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         RecyclerView recyclerView = binding.recyclerPublishes;
         ProgressBar progressBar = binding.mainProgress;
         ButterKnife.bind(this);
-        MainViewModel viewModel = ViewModelProviders.of(this, viewModelFactory).get(MainViewModel.class);
+        MainViewModel viewModel = ViewModelProviders.of(this, new ViewModelFactory()).get(MainViewModel.class);
         PublishDiffUtilCallback publishDiffUtil = new PublishDiffUtilCallback();
         PublishPagedListAdapter adapter = new PublishPagedListAdapter(publishDiffUtil.diffUtilCallback);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, OrientationHelper.VERTICAL, false));
