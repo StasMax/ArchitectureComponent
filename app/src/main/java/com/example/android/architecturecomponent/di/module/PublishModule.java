@@ -62,12 +62,6 @@ public class PublishModule {
 
     @Provides
     @Singleton
-    ViewModelProvider.Factory getViewModelFactory(IPublishIteractor publishIteractor) {
-        return new ViewModelFactory(publishIteractor);
-    }
-
-    @Provides
-    @Singleton
     Api getApi() {
         return new RetrofitInit().getRetrofit().create(Api.class);
     }

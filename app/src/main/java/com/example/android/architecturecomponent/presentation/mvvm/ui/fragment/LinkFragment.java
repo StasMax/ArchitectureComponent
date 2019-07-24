@@ -1,7 +1,5 @@
 package com.example.android.architecturecomponent.presentation.mvvm.ui.fragment;
 
-
-import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,21 +8,13 @@ import android.view.ViewGroup;
 import com.example.android.architecturecomponent.R;
 import com.example.android.architecturecomponent.presentation.app.App;
 import com.example.android.architecturecomponent.presentation.mvvm.viewModel.LinkViewModel;
-import com.example.android.architecturecomponent.presentation.mvvm.viewModel.ViewModelFactory;
-
-import javax.inject.Inject;
-
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
 import butterknife.Unbinder;
 
-public class LinkFragment extends BaseFragment {
-
-    private LinkViewModel model;
+public class LinkFragment extends AbstractFragment<LinkViewModel> {
     private Unbinder unbinder;
-    @Inject
-    ViewModelFactory viewModelFactory;
 
     public LinkFragment() {
     }
@@ -35,8 +25,7 @@ public class LinkFragment extends BaseFragment {
         App.getComponent().inject(this);
         View view = inflater.inflate(R.layout.fragment_link, container, false);
         unbinder = ButterKnife.bind(this, view);
-        model = ViewModelProviders.of(this, viewModelFactory).get(LinkViewModel.class);
-        return view;
+                return view;
     }
 
     @OnTextChanged({R.id.edit_category_link, R.id.edit_tag_link,
@@ -49,33 +38,38 @@ public class LinkFragment extends BaseFragment {
         String text = s.toString();
         switch (getActivity().getCurrentFocus().getId()) {
             case R.id.edit_category_link:
-                model.fieldCategory(text);
+                getViewModel().fieldCategory(text);
                 break;
             case R.id.edit_tag_post:
-                model.fieldTag(text);
+                getViewModel().fieldTag(text);
                 break;
             case R.id.edit_link_link:
-                model.fieldLink(text);
+                getViewModel().fieldLink(text);
                 break;
             case R.id.edit_link_link_name:
-                model.fieldLinkName(text);
+                getViewModel().fieldLinkName(text);
                 break;
         }
     }
 
     @OnClick(R.id.button_send_link)
     void onClickPost() {
-        if (model.getCategories().size() == 0 || model.getTags().size() == 0 || model.getLinks().size() != model.getLinksNames().size()) {
-            showMessage(R.string.error_fields);
-        } else {
-            model.initSendLink();
-            showMessage(R.string.success_post);
-        }
+        getViewModel().onClickButtonSendLink();
+
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    @Override
+    protected void onViewModelReady() {
+        getViewModel().getShowToast().observe(this, integer -> {
+            if (integer != null) {
+                showMessage(integer);
+            }
+        });
     }
 }
